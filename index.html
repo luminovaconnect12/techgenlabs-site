@@ -148,7 +148,32 @@ nav>.wrap{display:flex;align-items:center;justify-content:space-between;height:7
 .fcol a{display:block;color:var(--mist);font-size:.92rem;padding:.28rem 0;transition:color .2s,transform .2s}
 .fcol a:hover{color:var(--ink);transform:translateX(3px)}
 .fbar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-block:1.8rem;border-top:1px solid var(--line);font-family:var(--mono);font-size:.75rem;color:var(--dim)}
-.navlinks{display:flex;gap:1.8rem;align-items:center}.navlinks .navlink{white-space:nowrap}nav .mega .megawrap{display:grid;grid-template-columns:repeat(4,1fr) 1.15fr;align-items:start;height:auto;gap:2rem}</style>
+.navlinks{display:flex;gap:1.8rem;align-items:center}.navlinks .navlink{white-space:nowrap}nav .mega .megawrap{display:grid;grid-template-columns:repeat(4,1fr) 1.15fr;align-items:start;height:auto;gap:2rem}
+.hamb{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.hamb span{width:26px;height:2px;background:var(--ink);display:block;transition:.3s var(--ease)}
+.hamb.x span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamb.x span:nth-child(2){opacity:0}
+.hamb.x span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobnav{position:fixed;top:74px;left:0;right:0;bottom:0;z-index:150;background:var(--surface);display:flex;flex-direction:column;justify-content:center;padding:1.5rem clamp(1.5rem,7vw,3rem);transform:translateY(-115%);transition:transform .5s cubic-bezier(.16,1,.3,1);pointer-events:none;border-top:1px solid var(--line)}
+.mobnav.open{transform:translateY(0);pointer-events:auto}
+.mobnav a{font-family:var(--display);font-weight:500;font-size:clamp(1.9rem,9vw,2.8rem);color:var(--ink);padding:.4rem 0;letter-spacing:-.02em;text-decoration:none}
+.mobnav a:last-child{margin-top:1.4rem;font-size:.95rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+@media(max-width:900px){
+ #siteNav .navlinks{display:none!important}
+ #siteNav .mega{display:none!important}
+ #siteNav .pill{display:none!important}
+ .hamb{display:flex!important}
+ .cur{display:none!important}
+}
+@media(max-width:768px){
+ .tsec>.wrap{grid-template-columns:1fr!important;gap:1.4rem!important}
+ .wcard{flex:0 0 82vw!important;height:56vh!important}
+ .scard{width:46vw!important}
+ .fcols{grid-template-columns:1fr 1fr!important}
+ .fbig{flex-direction:column;align-items:flex-start;gap:1.4rem}
+ .svc-bot{flex-direction:column;gap:.5rem;align-items:flex-start}
+}
+</style>
 </head>
 <body data-theme="slate">
 <div id="pre"><div class="big" id="preNum">00</div><div class="lab">TechGen Labs · loading</div></div>
@@ -450,6 +475,14 @@ function footerSmoke(cv){var ctx=cv.getContext('2d'),DPR=Math.min(devicePixelRat
 document.querySelectorAll('.hero-bg').forEach(function(cv){var a=cv.getAttribute('data-anim')||'plexus';bindMouse(cv.parentElement);(ANIM[a]||ANIM.plexus)(cv);});
 document.querySelectorAll('.footer-smoke').forEach(footerSmoke);
 document.querySelectorAll('.site-footer [data-mag]').forEach(function(el){el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect();if(window.gsap)gsap.to(el,{x:(e.clientX-(r.left+r.width/2))*.3,y:(e.clientY-(r.top+r.height/2))*.5,duration:.4});});el.addEventListener('mouseleave',function(){if(window.gsap)gsap.to(el,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'});});});
+})();
+</script><script>
+(function(){var nav=document.getElementById('siteNav');if(!nav)return;var wrap=nav.querySelector('.wrap');
+var h=document.createElement('button');h.className='hamb';h.setAttribute('aria-label','Menu');h.innerHTML='<span></span><span></span><span></span>';wrap.appendChild(h);
+var m=document.createElement('div');m.className='mobnav';m.innerHTML='<a href="services.html">Services</a><a href="work.html">Work</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="contact.html">Let\u2019s talk \u2192</a>';document.body.appendChild(m);
+function t(){var o=m.classList.toggle('open');h.classList.toggle('x',o);document.documentElement.style.overflow=o?'hidden':'';}
+h.addEventListener('click',t);
+m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');h.classList.remove('x');document.documentElement.style.overflow='';});});
 })();
 </script></body>
 </html>
