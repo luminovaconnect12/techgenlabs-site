@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Services — TechGen Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=Instrument+Serif:ital@1&family=Space+Mono&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{--bg:#08090c;--surface:#0f1116;--ink:#f0f1f4;--mist:#969ba6;--dim:#565b66;--accent:#6f9ceb;--on-accent:#08090c;--line:rgba(240,241,244,.08);--line-2:rgba(240,241,244,.16);--display:'Space Grotesk',sans-serif;--body:'Inter',sans-serif;--serif:'Instrument Serif',Georgia,serif;--mono:'Space Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;line-height:1.5;transition:background .6s var(--ease)}
+@media(pointer:fine){body{cursor:none}}a{color:inherit;text-decoration:none}::selection{background:var(--accent);color:var(--on-accent)}
+.wrap{width:100%;max-width:100rem;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,3.5rem)}.pad{padding-block:clamp(4rem,9vw,8rem)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.serif{font-family:var(--serif);font-style:italic;color:var(--accent)}
+.cur{position:fixed;top:0;left:0;z-index:800;pointer-events:none;width:42px;height:42px;border:1px solid var(--accent);border-radius:50%;transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),background .3s;mix-blend-mode:difference}.cur.grow{width:80px;height:80px;background:#fff}@media(pointer:coarse){.cur{display:none}}
+nav{position:fixed;inset:0 0 auto 0;z-index:200;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 55%,transparent);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{font-family:var(--display);font-weight:600;font-size:1.15rem;letter-spacing:-.02em}.logo b{color:var(--accent)}
+.navlinks{display:flex;gap:2rem;font-size:.9rem;color:var(--mist)}.navlinks a{transition:color .25s}.navlinks a:hover,.navlinks a.on{color:var(--ink)}
+.pill{border:1px solid var(--line-2);border-radius:999px;padding:.55rem 1.2rem;font-size:.82rem;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;transition:.3s}.pill:hover{background:var(--ink);color:var(--bg)}
+@media(max-width:900px){.navlinks{display:none}}
+.phero{padding-top:clamp(9rem,18vh,13rem)}
+.phero h1{font-family:var(--display);font-weight:500;font-size:clamp(2.6rem,8vw,7rem);line-height:.96;letter-spacing:-.035em;max-width:15ch}
+.phero h1 .r{display:block;overflow:hidden}.phero h1 .r>span{display:inline-block;transform:translateY(110%)}
+.phero .lede{font-size:clamp(1.05rem,1.6vw,1.35rem);color:var(--mist);max-width:52ch;margin-top:2rem}
+.rv{opacity:0;transform:translateY(36px)}
+.division{border-top:1px solid var(--line);padding-block:clamp(3rem,6vw,5rem)}
+.division .head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.division .head h2{font-family:var(--display);font-weight:500;font-size:clamp(1.6rem,3.4vw,2.6rem);letter-spacing:-.02em}
+.division .head .c{font-family:var(--mono);color:var(--dim);font-size:.75rem}
+.srow{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:1.5rem;padding:1.4rem 0;border-top:1px solid var(--line);position:relative;transition:padding .4s var(--ease)}
+.srow:hover{padding-inline:1.2rem}
+.srow .num{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+.srow .nm{font-family:var(--display);font-weight:500;font-size:clamp(1.2rem,2.2vw,1.8rem);letter-spacing:-.01em;transition:color .3s}
+.srow .ds{color:var(--mist);font-size:.9rem;max-width:46ch;margin-top:.25rem;opacity:.85}
+.srow .arw{color:var(--dim);transition:transform .3s,color .3s;font-family:var(--mono)}
+.srow::after{content:"";position:absolute;left:0;bottom:0;height:100%;width:0;background:color-mix(in srgb,var(--accent) 8%,transparent);z-index:-1;transition:width .4s var(--ease);border-radius:.6rem}
+.srow:hover::after{width:100%}
+.srow:hover .arw{transform:translate(4px,-4px);color:var(--accent)}
+.cta{text-align:center}.cta h2{font-family:var(--display);font-weight:500;font-size:clamp(2rem,5.2vw,3.8rem);line-height:1.04;letter-spacing:-.03em;max-width:18ch;margin-inline:auto}.cta a{margin-top:2.2rem;display:inline-block}
+footer{border-top:1px solid var(--line);padding-block:3rem;color:var(--dim);font-size:.85rem;font-family:var(--mono)}footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.sw{position:fixed;right:1rem;bottom:1rem;z-index:400;display:flex;gap:.5rem;background:color-mix(in srgb,var(--surface) 85%,transparent);backdrop-filter:blur(12px);border:1px solid var(--line-2);border-radius:999px;padding:.5rem .6rem;align-items:center}.sw .lab{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding-inline:.4rem}.sw button{width:24px;height:24px;border-radius:50%;border:2px solid transparent;cursor:pointer}.sw button.on{border-color:var(--ink)}
+.hasmega{position:static}
+.mega{position:absolute;top:100%;left:0;width:100%;background:color-mix(in srgb,var(--surface) 97%,transparent);backdrop-filter:blur(22px);border-bottom:1px solid var(--line);overflow:hidden;max-height:0;opacity:0;transition:max-height .5s var(--ease),opacity .35s}
+.mega.open{max-height:80vh;opacity:1}
+.megawrap{display:grid;grid-template-columns:repeat(4,1fr) 1.15fr;gap:2rem;padding:2.6rem clamp(1.25rem,4vw,3.5rem)}
+.megacol h5{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.megacol a{display:block;color:var(--mist);font-size:.9rem;padding:.34rem 0;transition:color .2s,transform .2s}
+.megacol a:hover{color:var(--ink);transform:translateX(4px)}
+.megafeat{border-left:1px solid var(--line);padding-left:2rem}
+.megafeat .fk{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.megafeat h4{font-family:var(--display);font-weight:500;font-size:1.3rem;margin:.6rem 0;letter-spacing:-.01em;line-height:1.15}
+.megafeat p{color:var(--mist);font-size:.85rem}
+.mbtn{margin-top:1.2rem;display:inline-block;background:var(--accent);color:var(--on-accent);border-radius:999px;padding:.55rem 1.1rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}
+.navlink{background:none;border:0;color:var(--mist);font-family:var(--body);font-size:.9rem;cursor:pointer;transition:color .25s}.navlink:hover,.navlink.on{color:var(--ink)}
+nav>.wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+@media(max-width:900px){.mega{display:none}}
+
+.phero{position:relative;overflow:hidden}
+.phero>.wrap{position:relative;z-index:1}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.85}
+.grid{position:relative}.grid>div{position:relative;z-index:1}
+.site-footer{position:relative;overflow:hidden;background:#060709;border-top:1px solid var(--line);margin-top:2rem}
+.footer-smoke{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.7}
+.site-footer .wrap{position:relative;z-index:1}
+.fbig{padding-block:clamp(3.5rem,8vw,6rem);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
+.fbig h2{font-family:var(--display);font-weight:500;font-size:clamp(2rem,5.5vw,4.5rem);line-height:1;letter-spacing:-.035em;max-width:16ch}
+.fbig .btnf{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:var(--on-accent);font-weight:600;padding:.9rem 1.6rem;border-radius:999px;font-size:.95rem;transition:transform .3s,filter .3s;font-family:var(--body)}
+.fbig .btnf:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.fcols{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2.5rem;padding-block:clamp(3rem,6vw,4.5rem)}
+@media(max-width:820px){.fcols{grid-template-columns:1fr 1fr}}
+.fbrand p{color:var(--mist);font-size:.92rem;margin-top:1rem;max-width:34ch}
+.fcol h5{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:1.1rem}
+.fcol a{display:block;color:var(--mist);font-size:.92rem;padding:.28rem 0;transition:color .2s,transform .2s}
+.fcol a:hover{color:var(--ink);transform:translateX(3px)}
+.fbar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-block:1.8rem;border-top:1px solid var(--line);font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+</style></head>
+<body data-theme="slate">
+<div class="cur" id="cur"></div>
+<nav id="siteNav"><div class="wrap"><a class="logo" href="index.html">TechGen<b>*</b>Labs</a><div class="navlinks"><div class="hasmega" id="megaTrig"><button class="navlink on">Services ▾</button></div><a class="navlink" href="work.html">Work</a><a class="navlink" href="about.html">About</a><a class="navlink" href="contact.html">Contact</a></div><a class="pill" href="contact.html" data-cursor data-mag>Let’s talk</a></div><div class="mega" id="mega"><div class="wrap megawrap"><div class="megacol"><h5>AI & Automation</h5><a href="service-ai-agents.html" data-cursor>AI Agents</a><a href="service-ai-chatbots.html" data-cursor>AI Chatbots</a><a href="service-voice-ai-agents.html" data-cursor>Voice AI Agents</a><a href="service-workflow-automation.html" data-cursor>Workflow Automation</a><a href="service-crm-automation.html" data-cursor>CRM Automation</a><a href="service-lead-generation-systems.html" data-cursor>Lead Generation Systems</a></div><div class="megacol"><h5>Design</h5><a href="service-ui-ux-design.html" data-cursor>UI/UX Design</a><a href="service-product-design.html" data-cursor>Product Design</a><a href="service-website-design.html" data-cursor>Website Design</a><a href="service-mobile-app-design.html" data-cursor>Mobile App Design</a><a href="service-branding.html" data-cursor>Branding</a><a href="service-logo-design.html" data-cursor>Logo Design</a><a href="service-motion-design.html" data-cursor>Motion Design</a><a href="service-design-systems.html" data-cursor>Design Systems</a></div><div class="megacol"><h5>Development</h5><a href="service-saas-development.html" data-cursor>SaaS Development</a><a href="service-web-development.html" data-cursor>Web Development</a><a href="service-mobile-development.html" data-cursor>Mobile Development</a><a href="service-custom-software.html" data-cursor>Custom Software</a><a href="service-api-integrations.html" data-cursor>API Integrations</a></div><div class="megacol"><h5>Growth</h5><a href="service-seo.html" data-cursor>SEO</a><a href="service-conversion-optimization.html" data-cursor>Conversion Optimization</a><a href="service-analytics.html" data-cursor>Analytics</a><a href="service-marketing-automation.html" data-cursor>Marketing Automation</a></div><div class="megafeat"><div class="fk">Featured</div><h4>Systems in production, results on record.</h4><p>How we took 74% of support volume off a team in a single quarter.</p><div><a class="mbtn" href="work.html" data-cursor>View work</a></div></div></div></div></nav>
+
+<header class="phero"><canvas class="hero-bg"></canvas><div class="wrap">
+  <p class="eyebrow rv">Services</p>
+  <h1><span class="r"><span>Everything you need</span></span><span class="r"><span>to build, scale &amp; <span class="serif">grow.</span></span></span></h1>
+  <p class="lede rv">Four practices, one senior team. Bring us an outcome and we’ll assemble the right mix — from a single AI agent to a full product and the growth engine around it.</p>
+</div></header>
+
+<div class="wrap" id="list">
+  <section class="division"><div class="head"><h2>01 — AI &amp; Automation</h2><span class="c">6 services</span></div>
+    <a class="srow" href="service-ai-agents.html" data-cursor><span class="num">01</span><div><div class="nm">AI Agents</div><div class="ds">Autonomous agents that operate, decide and act inside your workflows.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-ai-chatbots.html" data-cursor><span class="num">02</span><div><div class="nm">AI Chatbots</div><div class="ds">Conversational assistants that resolve, qualify and convert 24/7.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-voice-ai-agents.html" data-cursor><span class="num">03</span><div><div class="nm">Voice AI Agents</div><div class="ds">Natural voice agents for support, booking and outbound.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-workflow-automation.html" data-cursor><span class="num">04</span><div><div class="nm">Workflow Automation</div><div class="ds">Operations that run themselves — from intake to fulfilment.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-crm-automation.html" data-cursor><span class="num">05</span><div><div class="nm">CRM Automation</div><div class="ds">Your revenue engine, wired together and self-updating.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-lead-generation-systems.html" data-cursor><span class="num">06</span><div><div class="nm">Lead Generation Systems</div><div class="ds">Pipeline as infrastructure — researched accounts, delivered monthly.</div></div><span class="arw">↗</span></a>
+  </section>
+
+  <section class="division"><div class="head"><h2>02 — Design</h2><span class="c">8 services</span></div>
+    <a class="srow" href="service-ui-ux-design.html" data-cursor><span class="num">07</span><div><div class="nm">UI/UX Design</div><div class="ds">Interfaces engineered to convert and delight.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-product-design.html" data-cursor><span class="num">08</span><div><div class="nm">Product Design</div><div class="ds">End-to-end product thinking, from flows to pixels.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-website-design.html" data-cursor><span class="num">09</span><div><div class="nm">Website Design</div><div class="ds">Fast, modern, measurable sites that carry the brand.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-mobile-app-design.html" data-cursor><span class="num">10</span><div><div class="nm">Mobile App Design</div><div class="ds">Native-quality experiences from a single design language.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-branding.html" data-cursor><span class="num">11</span><div><div class="nm">Branding</div><div class="ds">Identity systems that make the brand unmistakable.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-logo-design.html" data-cursor><span class="num">12</span><div><div class="nm">Logo Design</div><div class="ds">Marks built to last, in 2D and 3D.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-motion-design.html" data-cursor><span class="num">13</span><div><div class="nm">Motion Design</div><div class="ds">Motion language that makes the product feel alive.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-design-systems.html" data-cursor><span class="num">14</span><div><div class="nm">Design Systems</div><div class="ds">Scalable component libraries your team can build on.</div></div><span class="arw">↗</span></a>
+  </section>
+
+  <section class="division"><div class="head"><h2>03 — Development</h2><span class="c">5 services</span></div>
+    <a class="srow" href="service-saas-development.html" data-cursor><span class="num">15</span><div><div class="nm">SaaS Development</div><div class="ds">From idea to recurring revenue, built to scale.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-web-development.html" data-cursor><span class="num">16</span><div><div class="nm">Web Development</div><div class="ds">Fast, modern, measurable — engineered for outcomes.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-mobile-development.html" data-cursor><span class="num">17</span><div><div class="nm">Mobile Development</div><div class="ds">Native quality, single codebase, real velocity.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-custom-software.html" data-cursor><span class="num">18</span><div><div class="nm">Custom Software</div><div class="ds">Software shaped to your business, not the other way around.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-api-integrations.html" data-cursor><span class="num">19</span><div><div class="nm">API Integrations</div><div class="ds">Your stack, wired together and reliable.</div></div><span class="arw">↗</span></a>
+  </section>
+
+  <section class="division"><div class="head"><h2>04 — Growth</h2><span class="c">4 services</span></div>
+    <a class="srow" href="service-seo.html" data-cursor><span class="num">20</span><div><div class="nm">SEO</div><div class="ds">Compounding organic reach, engineered technically and editorially.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-conversion-optimization.html" data-cursor><span class="num">21</span><div><div class="nm">Conversion Optimization</div><div class="ds">Turn traffic into revenue with tested, measured change.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-analytics.html" data-cursor><span class="num">22</span><div><div class="nm">Analytics</div><div class="ds">Instrumentation and dashboards that make decisions obvious.</div></div><span class="arw">↗</span></a>
+    <a class="srow" href="service-marketing-automation.html" data-cursor><span class="num">23</span><div><div class="nm">Marketing Automation</div><div class="ds">Lifecycle systems that nurture and convert on autopilot.</div></div><span class="arw">↗</span></a>
+  </section>
+</div>
+
+<section class="pad cta" style="border-top:1px solid var(--line)"><div class="wrap">
+  <span class="eyebrow rv" style="display:block;margin-bottom:1.4rem">Not sure where to start?</span>
+  <h2 class="rv">Bring us the outcome. We’ll assemble the right mix.</h2>
+  <a class="pill rv" href="contact.html" data-cursor data-mag style="border-color:var(--accent);color:var(--accent)">Book a discovery call →</a>
+</div></section>
+<footer class="site-footer">
+<canvas class="footer-smoke"></canvas>
+<div class="wrap fbig"><h2>Let&rsquo;s build the system your competitors will wish they had.</h2><a class="btnf" href="contact.html" data-cursor data-mag>Start a project &#8599;</a></div>
+<div class="wrap fcols">
+ <div class="fbrand"><a class="logo" href="index.html" style="font-family:var(--display);font-weight:600;font-size:1.2rem">TechGen<b style="color:var(--accent)">*</b>Labs</a><p>A premium digital product studio &mdash; AI, design, engineering and growth, engineered for measurable outcomes.</p></div>
+ <div class="fcol"><h5>Services</h5><a href="service-ai-agents.html" data-cursor>AI Agents</a><a href="service-ui-ux-design.html" data-cursor>UI/UX Design</a><a href="service-saas-development.html" data-cursor>SaaS Development</a><a href="service-seo.html" data-cursor>SEO</a><a href="services.html" data-cursor>All services &rarr;</a></div>
+ <div class="fcol"><h5>Company</h5><a href="work.html" data-cursor>Work</a><a href="about.html" data-cursor>About</a><a href="contact.html" data-cursor>Contact</a></div>
+ <div class="fcol"><h5>Connect</h5><a href="mailto:hello@techgenlabs.com" data-cursor>hello@techgenlabs.com</a><a href="#" data-cursor>LinkedIn</a><a href="#" data-cursor>X / Twitter</a><a href="#" data-cursor>Dribbble</a></div>
+</div>
+<div class="wrap fbar"><span>&copy; 2026 TechGen Labs. All rights reserved.</span><span>Design &middot; Development &middot; AI &middot; Growth</span></div>
+</footer>
+
+<div class="sw" id="sw"><span class="lab">Dark</span><button data-t="slate" style="background:#6f9ceb"></button><button data-t="onyx" style="background:#c8b79c"></button><button data-t="midnight" style="background:#8fb4e6"></button><button data-t="emerald" style="background:#3fb98f"></button></div>
+<script>
+const THEMES={slate:{'--bg':'#08090c','--surface':'#0f1116','--ink':'#f0f1f4','--mist':'#969ba6','--dim':'#565b66','--accent':'#6f9ceb','--on-accent':'#08090c','--line':'rgba(240,241,244,.08)','--line-2':'rgba(240,241,244,.16)'},onyx:{'--bg':'#0a0a0b','--surface':'#131315','--ink':'#f2efe9','--mist':'#a29d95','--dim':'#66625b','--accent':'#c8b79c','--on-accent':'#0a0a0b','--line':'rgba(242,239,233,.08)','--line-2':'rgba(242,239,233,.16)'},midnight:{'--bg':'#080b12','--surface':'#0e131d','--ink':'#eaf0f7','--mist':'#94a0b2','--dim':'#586477','--accent':'#8fb4e6','--on-accent':'#080b12','--line':'rgba(234,240,247,.08)','--line-2':'rgba(234,240,247,.16)'},emerald:{'--bg':'#0a0e0d','--surface':'#101614','--ink':'#eaf1ee','--mist':'#93a29b','--dim':'#57655d','--accent':'#3fb98f','--on-accent':'#06100c','--line':'rgba(234,241,238,.08)','--line-2':'rgba(234,241,238,.16)'}};
+function setTheme(n){const t=THEMES[n],r=document.documentElement;for(const k in t)r.style.setProperty(k,t[k]);document.body.dataset.theme=n;document.querySelectorAll('#sw button').forEach(b=>b.classList.toggle('on',b.dataset.t===n))}
+document.getElementById('sw').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setTheme(b.dataset.t)});setTheme('slate');
+const cur=document.getElementById('cur');let cX=innerWidth/2,cY=innerHeight/2,tX=cX,tY=cY;addEventListener('mousemove',e=>{tX=e.clientX;tY=e.clientY});(function l(){cX+=(tX-cX)*.2;cY+=(tY-cY)*.2;cur.style.transform=`translate(${cX}px,${cY}px) translate(-50%,-50%)`;requestAnimationFrame(l)})();
+document.addEventListener('mouseover',e=>{if(e.target.closest('[data-cursor],a,button'))cur.classList.add('grow')});document.addEventListener('mouseout',e=>{if(e.target.closest('[data-cursor],a,button'))cur.classList.remove('grow')});
+gsap.registerPlugin(ScrollTrigger);
+if(window.Lenis){const lenis=new Lenis({lerp:.09,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+gsap.to('.phero h1 .r>span',{y:0,duration:1.1,ease:'power4.out',stagger:.1,delay:.1});
+gsap.utils.toArray('.rv').forEach(el=>gsap.to(el,{opacity:1,y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%'}}));
+gsap.utils.toArray('.srow').forEach(el=>gsap.from(el,{opacity:0,y:20,duration:.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 92%'}}));
+document.querySelectorAll('[data-mag]').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();gsap.to(el,{x:(e.clientX-(r.left+r.width/2))*.35,y:(e.clientY-(r.top+r.height/2))*.5,duration:.4})});el.addEventListener('mouseleave',()=>gsap.to(el,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'}))});
+</script><script>(function(){var t=document.getElementById('megaTrig'),m=document.getElementById('mega');if(!t||!m)return;var to;function o(){clearTimeout(to);m.classList.add('open')}function c(){to=setTimeout(function(){m.classList.remove('open')},160)}t.addEventListener('mouseenter',o);t.addEventListener('mouseleave',c);m.addEventListener('mouseenter',o);m.addEventListener('mouseleave',c);var b=t.querySelector('.navlink');if(b)b.addEventListener('click',function(e){e.preventDefault();m.classList.toggle('open')});})();</script><script>
+(function(){
+function acc(){return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#6f9ceb';}
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function heroField(cv){var ctx=cv.getContext('2d'),W,H,DPR=Math.min(devicePixelRatio||1,2),pts=[],m={x:-9999,y:-9999};var par=cv.parentElement;
+ function size(){var b=par.getBoundingClientRect();W=cv.width=Math.max(1,b.width*DPR);H=cv.height=Math.max(1,b.height*DPR);cv.style.width=b.width+'px';cv.style.height=b.height+'px';build();}
+ function build(){pts=[];var n=Math.min(72,Math.floor(W*H/(30000*DPR)));for(var i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25*DPR,vy:(Math.random()-.5)*.25*DPR});}
+ par.addEventListener('mousemove',function(e){var b=par.getBoundingClientRect();m.x=(e.clientX-b.left)*DPR;m.y=(e.clientY-b.top)*DPR;});
+ par.addEventListener('mouseleave',function(){m.x=m.y=-9999;});
+ function tick(){ctx.clearRect(0,0,W,H);var col=acc();var R=140*DPR,L=132*DPR;
+  for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;var dx=p.x-m.x,dy=p.y-m.y,d=Math.hypot(dx,dy);if(d<R){p.vx+=dx/(d||1)*.05;p.vy+=dy/(d||1)*.05;}p.vx*=.99;p.vy*=.99;}
+  for(var a=0;a<pts.length;a++)for(var b2=a+1;b2<pts.length;b2++){var A=pts[a],B=pts[b2],dd=Math.hypot(A.x-B.x,A.y-B.y);if(dd<L){ctx.strokeStyle=col;ctx.globalAlpha=(1-dd/L)*.16;ctx.lineWidth=DPR*.6;ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke();}}
+  ctx.globalAlpha=1;for(var k=0;k<pts.length;k++){var q=pts[k];var near=Math.hypot(q.x-m.x,q.y-m.y)<R;ctx.fillStyle=col;ctx.globalAlpha=near?.8:.4;ctx.beginPath();ctx.arc(q.x,q.y,DPR*(near?2:1.3),0,7);ctx.fill();}ctx.globalAlpha=1;requestAnimationFrame(tick);}
+ size();addEventListener('resize',size);if(!RM)tick();}
+function footerSmoke(cv){var ctx=cv.getContext('2d'),W,H,DPR=Math.min(devicePixelRatio||1,2),puffs=[];var par=cv.parentElement;
+ function size(){var b=par.getBoundingClientRect();W=cv.width=Math.max(1,b.width*DPR);H=cv.height=Math.max(1,b.height*DPR);cv.style.width=b.width+'px';cv.style.height=b.height+'px';puffs=[];for(var i=0;i<14;i++)puffs.push({x:Math.random()*W,y:Math.random()*H,r:(120+Math.random()*220)*DPR,vx:(Math.random()-.5)*.2*DPR,vy:(Math.random()-.5)*.1*DPR,a:.04+Math.random()*.05,ph:Math.random()*6.28});}
+ function tick(t){ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='screen';for(var i=0;i<puffs.length;i++){var p=puffs[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-p.r)p.x=W+p.r;if(p.x>W+p.r)p.x=-p.r;if(p.y<-p.r)p.y=H+p.r;if(p.y>H+p.r)p.y=-p.r;var a=p.a*(.7+.3*Math.sin(t*.0004+p.ph));var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);g.addColorStop(0,'rgba(150,158,172,'+a+')');g.addColorStop(.5,'rgba(90,96,110,'+(a*.5)+')');g.addColorStop(1,'rgba(8,9,12,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();}ctx.globalCompositeOperation='source-over';requestAnimationFrame(tick);}
+ size();addEventListener('resize',size);if(!RM)requestAnimationFrame(tick);}
+document.querySelectorAll('.hero-bg').forEach(heroField);
+document.querySelectorAll('.footer-smoke').forEach(footerSmoke);
+document.querySelectorAll('.site-footer [data-mag]').forEach(function(el){el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect();if(window.gsap)gsap.to(el,{x:(e.clientX-(r.left+r.width/2))*.3,y:(e.clientY-(r.top+r.height/2))*.5,duration:.4});});el.addEventListener('mouseleave',function(){if(window.gsap)gsap.to(el,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'});});});
+})();
+</script></body></html>
