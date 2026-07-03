@@ -173,6 +173,24 @@ nav>.wrap{display:flex;align-items:center;justify-content:space-between;height:7
  .fbig{flex-direction:column;align-items:flex-start;gap:1.4rem}
  .svc-bot{flex-direction:column;gap:.5rem;align-items:flex-start}
 }
+
+@media(max-width:768px){
+ .hero .hint{display:none}
+ .hero .br{left:0;right:0;bottom:1.3rem;text-align:left;max-width:none;padding-inline:clamp(1.25rem,4vw,3.5rem)}
+ .hero .br p{font-size:.82rem}
+ .hero h1{font-size:clamp(2.4rem,12.5vw,3.6rem);line-height:.98}
+ #gl{opacity:.5}
+ .svc-scroll{height:auto!important}
+ .svc-stage{position:static!important;height:auto!important;overflow:visible;padding:5rem 0 3rem}
+ #rock,#smoke{display:none!important}
+ .svc-top{position:static!important;transform:none!important;text-align:left;padding:0 clamp(1.25rem,4vw,3.5rem) 1rem}
+ .svc .words,#words{position:static!important;display:block;padding:0 clamp(1.25rem,4vw,3.5rem)}
+ .svc .words .line{overflow:visible}
+ .svc .words .line>span{transform:none!important;opacity:1!important;font-size:clamp(2.2rem,12vw,3.4rem)!important;display:inline-block}
+ .scards{position:static!important;display:flex!important;flex-direction:column;gap:1rem;padding:2rem clamp(1.25rem,4vw,3.5rem) 0}
+ .scard{position:static!important;left:auto!important;top:auto!important;width:auto!important;opacity:1!important;transform:none!important;border:1px solid var(--line);border-radius:1rem;padding:1.4rem;background:var(--surface)}
+ .svc-bot{position:static!important;flex-direction:column;gap:.6rem;align-items:flex-start;padding:2rem clamp(1.25rem,4vw,3.5rem) 0}
+}
 </style>
 </head>
 <body data-theme="slate">
@@ -291,19 +309,19 @@ setInterval(()=>{if(!document.hidden)swapWord()},3800);
   const renderer=new THREE.WebGLRenderer({canvas:document.getElementById('gl'),antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   const scene=new THREE.Scene();const cam=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,.1,100);cam.position.z=7;
   const s=new THREE.Shape();const R=1.35,r=.34;for(let i=0;i<8;i++){const a=(Math.PI/4)*i-Math.PI/2;const rad=i%2===0?R:r;const x=Math.cos(a)*rad,y=Math.sin(a)*rad;i===0?s.moveTo(x,y):s.lineTo(x,y);}s.closePath();
-  const geo=new THREE.ExtrudeGeometry(s,{depth:.7,bevelEnabled:true,bevelThickness:.18,bevelSize:.16,bevelSegments:6,steps:1});geo.center();
-  const mark=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x0d0f14,metalness:.72,roughness:.32}));
+  let geo=new THREE.ExtrudeGeometry(s,{depth:.7,bevelEnabled:true,bevelThickness:.18,bevelSize:.16,bevelSegments:6,steps:1});geo.center();geo=geo.toNonIndexed();const __pos=geo.attributes.position,__arr=__pos.array,__base=new Float32Array(__arr),__triN=__pos.count/3,__cen=[],__odir=[],__axis=[],__spin=[],__c3=new THREE.Vector3();for(let tt=0;tt<__triN;tt++){const i0=(tt*3)*3;__c3.set((__base[i0]+__base[i0+3]+__base[i0+6])/3,(__base[i0+1]+__base[i0+4]+__base[i0+7])/3,(__base[i0+2]+__base[i0+5]+__base[i0+8])/3);__cen.push(__c3.clone());__odir.push(__c3.clone().normalize());__axis.push(new THREE.Vector3(Math.random()-.5,Math.random()-.5,Math.random()-.5).normalize());__spin.push((Math.random()*2-1)*Math.PI*1.4);}
+  const mark=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x0d0f14,metalness:.72,roughness:.32,flatShading:true}));
   const group=new THREE.Group();group.add(mark);group.position.x=1.7;scene.add(group);
   const wire=new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:0x6f9ceb,transparent:true,opacity:.18}));mark.add(wire);
   scene.add(new THREE.AmbientLight(0xffffff,.35));const key=new THREE.DirectionalLight(0xffffff,1.6);key.position.set(-4,5,6);scene.add(key);
   const rim=new THREE.PointLight(0x6f9ceb,3.2,30);rim.position.set(4,-2,-3);scene.add(rim);
   const rim2=new THREE.PointLight(0xffffff,1.1,30);rim2.position.set(6,3,2);scene.add(rim2);
   window.__setAccent=hex=>{const c=new THREE.Color(hex);rim.color=c;wire.material.color=c;};
-  let mx=0,my=0,tmx=0,tmy=0,charge=0,down=false;
+  let mx=0,my=0,tmx=0,tmy=0;const __EX={v:0};let __lastE=-1;const __q=new THREE.Quaternion(),__tv=new THREE.Vector3();
   addEventListener('mousemove',e=>{tmx=(e.clientX/innerWidth-.5);tmy=(e.clientY/innerHeight-.5)});
   function resize(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;group.position.x=innerWidth<760?0:1.7;cam.updateProjectionMatrix()}resize();addEventListener('resize',resize);
-  window.__markDown=()=>{down=true};window.__markUp=()=>{down=false;gsap.fromTo(group.scale,{x:1.22,y:1.22,z:1.22},{x:1,y:1,z:1,duration:1.1,ease:'elastic.out(1,.35)'});gsap.to(mark.rotation,{z:mark.rotation.z+Math.PI*.6,duration:1.2,ease:'power4.out'})};
-  (function anim(t){requestAnimationFrame(anim);mx+=(tmx-mx)*.05;my+=(tmy-my)*.05;charge+=((down?1:0)-charge)*.08;mark.rotation.y+=.0035+charge*.04;mark.rotation.x=my*.5;group.rotation.y=mx*.6;group.rotation.x=-my*.3;const sc=1+charge*.14+Math.sin(t*.001)*.012;mark.scale.setScalar(mark.scale.x+(sc-mark.scale.x)*.12);renderer.render(scene,cam)})(0);
+  window.__markDown=()=>{gsap.killTweensOf(__EX);gsap.to(__EX,{v:1,duration:.45,ease:'power3.out'})};window.__markUp=()=>{gsap.killTweensOf(__EX);gsap.to(__EX,{v:0,duration:1.15,ease:'elastic.out(1,.5)'})};function __shatter(e){if(e<0.0008){if(__lastE!==0){__arr.set(__base);__pos.needsUpdate=true;geo.computeVertexNormals();__lastE=0;}return;}__lastE=e;for(let tt=0;tt<__triN;tt++){__q.setFromAxisAngle(__axis[tt],__spin[tt]*e);const C=__cen[tt],D=__odir[tt],ox=D.x*e*2,oy=D.y*e*2,oz=D.z*e*2;for(let k=0;k<3;k++){const o=(tt*3+k)*3;__tv.set(__base[o]-C.x,__base[o+1]-C.y,__base[o+2]-C.z).applyQuaternion(__q);__arr[o]=C.x+__tv.x+ox;__arr[o+1]=C.y+__tv.y+oy;__arr[o+2]=C.z+__tv.z+oz;}}__pos.needsUpdate=true;geo.computeVertexNormals();}
+  (function anim(t){requestAnimationFrame(anim);mx+=(tmx-mx)*.05;my+=(tmy-my)*.05;mark.rotation.y+=.0035+__EX.v*.05;mark.rotation.x=my*.5;group.rotation.y=mx*.6;group.rotation.x=-my*.3;wire.material.opacity=.18*(1-__EX.v);const sc=1+Math.sin(t*.001)*.012;mark.scale.setScalar(mark.scale.x+(sc-mark.scale.x)*.12);__shatter(__EX.v);renderer.render(scene,cam)})(0);
 })();
 
 /* ===== HERO threads ===== */
@@ -367,7 +385,7 @@ let P=0;
 /* ===== SERVICES scatter + cards loop ===== */
 function smooth(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x)}
 (function loop(t){
-  const rp=smooth(P/0.16), sp=smooth((P-0.2)/0.32);
+  if(innerWidth<=768){document.querySelectorAll('#scards .scard').forEach(function(c){c.style.opacity=1;});return;}const rp=smooth(P/0.16), sp=smooth((P-0.2)/0.32);
   const wordsEl=document.getElementById('words');wordsEl.style.opacity=P>0.5?Math.max(0,1-(P-0.5)/0.08):1;
   for(const s of letters){const tx=+s.dataset.tx,ty=+s.dataset.ty,rot=+s.dataset.rot,seed=+s.dataset.seed;const fx=Math.sin(t*.0009+seed)*16*sp,fy=Math.cos(t*.0011+seed)*16*sp;const rvY=(1-rp)*46;s.style.transform=`translate(${tx*sp+fx}px,${ty*sp+fy+rvY}px) rotate(${rot*sp}deg)`;s.style.opacity=Math.min(1,rp*1.3)}
   document.querySelectorAll('.scard').forEach((el,i)=>{const cp=smooth((P-0.6-i*0.03)/0.28);const side=+el.dataset.side,seed=+el.dataset.seed;const inX=(1-cp)*side*120;const fy=Math.sin(t*.0008+seed)*10*cp;el.style.transform=`translate(${inX}px,${fy}px)`;el.style.opacity=cp});
@@ -385,7 +403,7 @@ document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.cl
 function initExp(){
   gsap.registerPlugin(ScrollTrigger);let lenis;
   if(window.Lenis){lenis=new Lenis({lerp:.09,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
-  ScrollTrigger.create({trigger:'#svcScroll',start:'top top',end:'bottom bottom',scrub:true,onUpdate:s=>{P=s.progress}});
+  if(innerWidth>768){ScrollTrigger.create({trigger:'#svcScroll',start:'top top',end:'bottom bottom',scrub:true,onUpdate:s=>{P=s.progress}});}
   gsap.utils.toArray('.rv').forEach(el=>gsap.to(el,{opacity:1,y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
   // about word-by-word
   const at=document.getElementById('aboutText');const words=at.textContent.trim().split(' ');at.innerHTML=words.map(w=>`<span class="word">${w}</span>`).join(' ');
