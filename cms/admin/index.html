@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TechGen Labs · CMS</title>
+<style>
+:root{
+  --bg:#0b0d12;--panel:#12151c;--panel-2:#171b24;--line:#232834;--line-2:#2e3542;
+  --ink:#eef1f6;--mist:#9aa3b2;--dim:#5c6472;--accent:#6f9ceb;--accent-2:#8bb0f0;
+  --on-accent:#08090c;--good:#4ade80;--warn:#fbbf24;--bad:#f87171;
+  --font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:14px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,textarea,select{font-family:inherit;font-size:14px}
+.hidden{display:none!important}
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:var(--on-accent);font-weight:600;padding:.6rem 1.1rem;border-radius:.55rem;transition:filter .2s,transform .2s;font-size:.9rem}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+.btn.ghost:hover{background:var(--panel-2);filter:none}
+.btn.sm{padding:.4rem .7rem;font-size:.8rem}
+.btn.danger{background:transparent;color:var(--bad);border:1px solid var(--line-2)}
+.btn.danger:hover{background:rgba(248,113,113,.12)}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:.4rem;font-weight:600}
+.field input,.field textarea,.field select{width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:.5rem;padding:.65rem .8rem;color:var(--ink);transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent)}
+.field textarea{min-height:80px;resize:vertical}
+.row{display:flex;gap:1rem}.row>*{flex:1}
+.badge{font-size:.68rem;padding:.2rem .55rem;border-radius:999px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.badge.published{background:rgba(74,222,128,.14);color:var(--good)}
+.badge.draft{background:rgba(251,191,36,.14);color:var(--warn)}
+
+/* ---------- Login ---------- */
+#login{min-height:100vh;display:grid;place-items:center;padding:1.5rem;
+  background:radial-gradient(80% 60% at 50% 0%,rgba(111,156,235,.12),transparent 70%),var(--bg)}
+#login .card{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:2.2rem}
+#login .brand{font-weight:700;font-size:1.4rem;letter-spacing:-.02em;margin-bottom:.3rem}
+#login .brand b{color:var(--accent)}
+#login .sub{color:var(--mist);margin-bottom:1.8rem;font-size:.9rem}
+#login .err{color:var(--bad);font-size:.82rem;margin-top:.4rem;min-height:1rem}
+
+/* ---------- Shell ---------- */
+#app{display:grid;grid-template-columns:250px 1fr;grid-template-rows:60px 1fr;height:100vh;grid-template-areas:"side top" "side main"}
+#top{grid-area:top;display:flex;align-items:center;justify-content:space-between;padding:0 1.4rem;border-bottom:1px solid var(--line);background:var(--panel)}
+#top .crumb{font-weight:600;font-size:1rem}
+#top .who{display:flex;align-items:center;gap:.9rem;color:var(--mist);font-size:.85rem}
+#side{grid-area:side;background:var(--panel);border-right:1px solid var(--line);padding:1.1rem .8rem;display:flex;flex-direction:column;overflow-y:auto}
+#side .logo{font-weight:700;font-size:1.15rem;letter-spacing:-.02em;padding:.4rem .6rem 1.2rem}
+#side .logo b{color:var(--accent)}
+#side .grp{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:.9rem .7rem .3rem;font-weight:700}
+.navitem{display:flex;align-items:center;gap:.7rem;padding:.6rem .7rem;border-radius:.5rem;color:var(--mist);font-weight:500;transition:.15s;width:100%;text-align:left}
+.navitem:hover{background:var(--panel-2);color:var(--ink)}
+.navitem.on{background:var(--accent);color:var(--on-accent)}
+.navitem .ic{width:18px;text-align:center}
+#main{grid-area:main;overflow-y:auto;padding:1.6rem 1.8rem}
+.pagehead{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem}
+.pagehead h1{font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
+.pagehead p{color:var(--mist);font-size:.88rem;margin-top:.2rem}
+
+/* ---------- Cards / table ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:.8rem;padding:1.2rem}
+.stat .n{font-size:2rem;font-weight:700;letter-spacing:-.02em}
+.stat .l{color:var(--mist);font-size:.82rem;margin-top:.2rem}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:.8rem;overflow:hidden}
+th,td{text-align:left;padding:.85rem 1rem;border-bottom:1px solid var(--line)}
+th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:700}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--panel-2)}
+td .t{font-weight:600}
+td .s{color:var(--dim);font-family:var(--mono);font-size:.78rem}
+.rowacts{display:flex;gap:.4rem;justify-content:flex-end}
+
+/* ---------- Editor ---------- */
+.editor{display:grid;grid-template-columns:1fr 320px;gap:1.4rem;align-items:start}
+.epanel{background:var(--panel);border:1px solid var(--line);border-radius:.8rem;padding:1.3rem}
+.epanel h3{font-size:.95rem;font-weight:700;margin-bottom:1rem}
+.builder{display:flex;flex-direction:column;gap:.8rem;min-height:60px}
+.block{background:var(--panel-2);border:1px solid var(--line-2);border-radius:.6rem;padding:.9rem;position:relative}
+.block.drag{opacity:.4}
+.block.over{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.block .bh{display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem}
+.block .bh .grip{cursor:grab;color:var(--dim);font-size:1rem;padding:0 .2rem}
+.block .bh .type{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.block .bh .ba{margin-left:auto;display:flex;gap:.3rem}
+.block .bh .ba button{color:var(--dim);padding:.2rem .4rem;border-radius:.35rem;font-size:.85rem}
+.block .bh .ba button:hover{background:var(--bg);color:var(--ink)}
+.addbar{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.4rem}
+.addbar button{border:1px dashed var(--line-2);border-radius:.5rem;padding:.5rem .8rem;color:var(--mist);font-size:.82rem;transition:.15s}
+.addbar button:hover{border-color:var(--accent);color:var(--ink)}
+.empty{color:var(--dim);text-align:center;padding:1.4rem;border:1px dashed var(--line-2);border-radius:.6rem;font-size:.85rem}
+
+/* ---------- Media ---------- */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.9rem}
+.mtile{background:var(--panel);border:1px solid var(--line);border-radius:.6rem;overflow:hidden;position:relative}
+.mtile img{width:100%;height:110px;object-fit:cover;display:block}
+.mtile .mm{padding:.5rem .6rem;font-size:.72rem;color:var(--mist);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mtile .del{position:absolute;top:.4rem;right:.4rem;background:rgba(0,0,0,.6);border-radius:.35rem;padding:.15rem .4rem;color:#fff;font-size:.75rem;opacity:0;transition:.15s}
+.mtile:hover .del{opacity:1}
+.drop{border:2px dashed var(--line-2);border-radius:.8rem;padding:2rem;text-align:center;color:var(--mist);margin-bottom:1.2rem;transition:.15s}
+.drop.over{border-color:var(--accent);background:var(--panel-2)}
+
+/* ---------- Toast / modal ---------- */
+#toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%) translateY(120%);background:var(--ink);color:var(--bg);padding:.7rem 1.2rem;border-radius:.6rem;font-weight:600;font-size:.85rem;transition:transform .3s;z-index:100}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:90;padding:1.5rem}
+.modal .mbox{background:var(--panel);border:1px solid var(--line);border-radius:.9rem;padding:1.6rem;max-width:760px;width:100%;max-height:82vh;overflow-y:auto}
+@media(max-width:900px){#app{grid-template-columns:1fr;grid-template-areas:"top" "main"}#side{display:none}.editor{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+  <form class="card" id="loginForm">
+    <div class="brand">TechGen<b>Labs</b></div>
+    <div class="sub">Content Management System</div>
+    <div class="field"><label>Email</label><input type="email" id="li_email" autocomplete="username" required></div>
+    <div class="field"><label>Password</label><input type="password" id="li_pw" autocomplete="current-password" required></div>
+    <button class="btn" style="width:100%;justify-content:center" type="submit">Sign in</button>
+    <div class="err" id="li_err"></div>
+  </form>
+</section>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <aside id="side">
+    <div class="logo">TechGen<b>Labs</b></div>
+    <button class="navitem" data-view="dashboard"><span class="ic">▧</span> Dashboard</button>
+    <div class="grp">Content</div>
+    <button class="navitem" data-view="pages"><span class="ic">▤</span> Pages</button>
+    <button class="navitem" data-view="posts"><span class="ic">✎</span> Posts</button>
+    <button class="navitem" data-view="services"><span class="ic">◈</span> Services</button>
+    <button class="navitem" data-view="projects"><span class="ic">▣</span> Work / Projects</button>
+    <div class="grp">Library</div>
+    <button class="navitem" data-view="media"><span class="ic">▦</span> Media</button>
+    <div class="grp">Site</div>
+    <button class="navitem" data-view="settings"><span class="ic">⚙</span> Settings</button>
+  </aside>
+  <header id="top">
+    <div class="crumb" id="crumb">Dashboard</div>
+    <div class="who">
+      <a href="https://techgenlabs.com" target="_blank" class="btn ghost sm">↗ View site</a>
+      <span id="whoName"></span>
+      <button class="btn ghost sm" id="logoutBtn">Log out</button>
+    </div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const API = '/api';
+const COLLECTIONS = {
+  pages:    {label:'Pages',    single:'Page',    desc:'Site pages built from blocks.'},
+  posts:    {label:'Posts',    single:'Post',    desc:'Blog articles and news.'},
+  services: {label:'Services', single:'Service', desc:'Service offerings.'},
+  projects: {label:'Projects', single:'Project', desc:'Case studies and work.'}
+};
+const BLOCK_TYPES = {
+  heading:  {label:'Heading',  fields:[['text','Heading text','input'],['level','Level (1-3)','input']]},
+  text:     {label:'Text',     fields:[['text','Paragraph text','textarea']]},
+  image:    {label:'Image',    fields:[['src','Image URL / pick','media'],['alt','Alt text','input']]},
+  button:   {label:'Button',   fields:[['label','Button label','input'],['href','Link URL','input']]},
+  columns:  {label:'Two Columns', fields:[['left','Left column','textarea'],['right','Right column','textarea']]},
+  quote:    {label:'Quote',    fields:[['text','Quote','textarea'],['cite','Attribution','input']]},
+  spacer:   {label:'Spacer',   fields:[['size','Height px','input']]},
+  html:     {label:'Raw HTML', fields:[['code','HTML code','textarea']]}
+};
+let ME=null, STATE={view:'dashboard', editing:null, media:[]};
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const slugify=s=>String(s).toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+async function api(path,opts={}){
+  const r=await fetch(API+path,{headers:{'Content-Type':'application/json'},credentials:'same-origin',...opts});
+  if(r.status===401 && ME){location.reload();}
+  const ct=r.headers.get('content-type')||'';
+  const data=ct.includes('json')?await r.json():await r.text();
+  if(!r.ok) throw new Error((data&&data.error)||'Request failed');
+  return data;
+}
+
+/* ---------- auth ---------- */
+async function boot(){
+  try{ const d=await api('/me'); ME=d.user; showApp(); }
+  catch{ $('#login').classList.remove('hidden'); $('#app').classList.add('hidden'); }
+}
+$('#loginForm').addEventListener('submit',async e=>{
+  e.preventDefault(); $('#li_err').textContent='';
+  try{
+    await api('/login',{method:'POST',body:JSON.stringify({email:$('#li_email').value,password:$('#li_pw').value})});
+    location.reload();
+  }catch(err){ $('#li_err').textContent=err.message; }
+});
+$('#logoutBtn').addEventListener('click',async()=>{ await api('/logout',{method:'POST'}); location.reload(); });
+
+function showApp(){
+  $('#login').classList.add('hidden'); $('#app').classList.remove('hidden');
+  $('#whoName').textContent=ME.name||ME.email;
+  document.querySelectorAll('.navitem').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+  go('dashboard');
+}
+function go(view){
+  STATE.view=view; STATE.editing=null;
+  document.querySelectorAll('.navitem').forEach(b=>b.classList.toggle('on',b.dataset.view===view));
+  $('#crumb').textContent = COLLECTIONS[view]?COLLECTIONS[view].label:(view[0].toUpperCase()+view.slice(1));
+  if(view==='dashboard') return renderDashboard();
+  if(view==='media') return renderMedia();
+  if(view==='settings') return renderSettings();
+  renderList(view);
+}
+
+/* ---------- dashboard ---------- */
+async function renderDashboard(){
+  const m=$('#main'); m.innerHTML='';
+  m.appendChild(elHead('Dashboard','Welcome back — manage everything on techgenlabs.com from here.'));
+  const wrap=el('div','cards'); m.appendChild(wrap);
+  for(const key of Object.keys(COLLECTIONS)){
+    const items=await api('/content?type='+key).catch(()=>[]);
+    const s=el('div','stat',`<div class="n">${items.length}</div><div class="l">${COLLECTIONS[key].label}</div>`);
+    s.style.cursor='pointer'; s.onclick=()=>go(key); wrap.appendChild(s);
+  }
+  const media=await api('/media').catch(()=>[]);
+  const s=el('div','stat',`<div class="n">${media.length}</div><div class="l">Media files</div>`);
+  s.style.cursor='pointer'; s.onclick=()=>go('media'); wrap.appendChild(s);
+}
+function elHead(title,desc,actions){
+  const h=el('div','pagehead'); h.appendChild(el('div','',`<h1>${esc(title)}</h1>${desc?`<p>${esc(desc)}</p>`:''}`));
+  if(actions) h.appendChild(actions); return h;
+}
+
+/* ---------- list ---------- */
+async function renderList(type){
+  const m=$('#main'); m.innerHTML='';
+  const cfg=COLLECTIONS[type];
+  const add=el('button','btn','+ New '+cfg.single); add.onclick=()=>openEditor(type,null);
+  m.appendChild(elHead(cfg.label,cfg.desc,add));
+  const items=await api('/content?type='+type).catch(()=>[]);
+  if(!items.length){ m.appendChild(el('div','empty','No '+cfg.label.toLowerCase()+' yet. Click “New '+cfg.single+'”.')); return; }
+  const t=el('table'); t.innerHTML='<thead><tr><th>Title</th><th>Slug</th><th>Status</th><th></th></tr></thead>';
+  const tb=el('tbody');
+  items.forEach(it=>{
+    const tr=el('tr');
+    tr.innerHTML=`<td><div class="t">${esc(it.title)}</div></td><td><span class="s">/${esc(it.slug||'')}</span></td>
+      <td><span class="badge ${it.status}">${it.status}</span></td>`;
+    const acts=el('td'); const box=el('div','rowacts');
+    const ed=el('button','btn ghost sm','Edit'); ed.onclick=()=>openEditor(type,it);
+    const del=el('button','btn danger sm','Delete'); del.onclick=()=>delItem(it,type);
+    box.append(ed,del); acts.appendChild(box); tr.appendChild(acts); tb.appendChild(tr);
+  });
+  t.appendChild(tb); m.appendChild(t);
+}
+async function delItem(it,type){
+  if(!confirm('Delete “'+it.title+'”?')) return;
+  await api('/content?id='+it.id,{method:'DELETE'}); toast('Deleted'); renderList(type);
+}
+
+/* ---------- editor + block builder ---------- */
+function openEditor(type,item){
+  STATE.editing={type, id:item?item.id:null,
+    title:item?item.title:'', slug:item?item.slug:'', status:item?item.status:'draft',
+    excerpt:item?item.excerpt:'', blocks:item&&item.blocks?JSON.parse(JSON.stringify(item.blocks)):[]};
+  renderEditor();
+}
+function renderEditor(){
+  const e=STATE.editing, cfg=COLLECTIONS[e.type], m=$('#main'); m.innerHTML='';
+  const back=el('button','btn ghost','← Back'); back.onclick=()=>go(e.type);
+  const save=el('button','btn','Save '+cfg.single); save.onclick=saveEditor;
+  const acts=el('div','rowacts'); acts.style.flex='none'; acts.append(back,save);
+  m.appendChild(elHead((e.id?'Edit ':'New ')+cfg.single, cfg.desc, acts));
+
+  const grid=el('div','editor');
+  // left: blocks
+  const left=el('div','epanel'); left.innerHTML='<h3>Content blocks</h3>';
+  const builder=el('div','builder'); builder.id='builder'; left.appendChild(builder);
+  const addbar=el('div','addbar');
+  Object.entries(BLOCK_TYPES).forEach(([k,v])=>{const b=el('button','','+ '+v.label);b.onclick=()=>addBlock(k);addbar.appendChild(b);});
+  left.appendChild(addbar);
+  // right: meta
+  const right=el('div','epanel'); right.innerHTML='<h3>Settings</h3>';
+  right.appendChild(mkField('Title','title','input'));
+  right.appendChild(mkField('Slug (URL)','slug','input'));
+  right.appendChild(mkField('Status','status','select'));
+  right.appendChild(mkField('Excerpt','excerpt','textarea'));
+  grid.append(left,right); m.appendChild(grid);
+  renderBlocks();
+}
+function mkField(label,key,kind){
+  const f=el('div','field'); f.appendChild(el('label','',label));
+  let input;
+  if(kind==='textarea'){input=el('textarea');input.value=STATE.editing[key]||'';}
+  else if(kind==='select'){input=el('select');input.innerHTML='<option value="draft">Draft</option><option value="published">Published</option>';input.value=STATE.editing[key]||'draft';}
+  else{input=el('input');input.value=STATE.editing[key]||'';}
+  input.oninput=()=>{STATE.editing[key]=input.value; if(key==='title'&&!STATE.editing._slugTouched){STATE.editing.slug=slugify(input.value);const s=$('#f_slug');if(s)s.value=STATE.editing.slug;}};
+  if(key==='slug'){input.id='f_slug';input.oninput=()=>{STATE.editing.slug=input.value;STATE.editing._slugTouched=true;};}
+  f.appendChild(input); return f;
+}
+function addBlock(type){
+  const props={}; BLOCK_TYPES[type].fields.forEach(f=>props[f[0]]='');
+  if(type==='heading')props.level='2'; if(type==='spacer')props.size='40';
+  STATE.editing.blocks.push({id:Date.now()+Math.random().toString(36).slice(2,6),type,props});
+  renderBlocks();
+}
+function renderBlocks(){
+  const b=$('#builder'); b.innerHTML='';
+  if(!STATE.editing.blocks.length){ b.appendChild(el('div','empty','No blocks yet. Add one below to start building.')); return; }
+  STATE.editing.blocks.forEach((blk,i)=>b.appendChild(blockCard(blk,i)));
+}
+function blockCard(blk,i){
+  const def=BLOCK_TYPES[blk.type]; const c=el('div','block'); c.draggable=true; c.dataset.i=i;
+  const bh=el('div','bh');
+  bh.innerHTML=`<span class="grip">⋮⋮</span><span class="type">${def.label}</span>`;
+  const ba=el('div','ba');
+  const up=el('button','','↑'); up.onclick=()=>moveBlock(i,-1);
+  const dn=el('button','','↓'); dn.onclick=()=>moveBlock(i,1);
+  const rm=el('button','','✕'); rm.onclick=()=>{STATE.editing.blocks.splice(i,1);renderBlocks();};
+  ba.append(up,dn,rm); bh.appendChild(ba); c.appendChild(bh);
+  def.fields.forEach(([key,label,kind])=>{
+    const f=el('div','field'); f.appendChild(el('label','',label));
+    if(kind==='media'){
+      const rowd=el('div','row');
+      const inp=el('input'); inp.value=blk.props[key]||''; inp.oninput=()=>blk.props[key]=inp.value;
+      const pick=el('button','btn ghost sm','Pick'); pick.style.flex='none'; pick.onclick=()=>pickMedia(url=>{blk.props[key]=url;inp.value=url;});
+      rowd.append(inp,pick); f.appendChild(rowd);
+    }else{
+      const inp=kind==='textarea'?el('textarea'):el('input');
+      inp.value=blk.props[key]||''; inp.oninput=()=>blk.props[key]=inp.value; f.appendChild(inp);
+    }
+    c.appendChild(f);
+  });
+  // drag events
+  c.addEventListener('dragstart',e=>{c.classList.add('drag');e.dataTransfer.setData('text/plain',i);});
+  c.addEventListener('dragend',()=>c.classList.remove('drag'));
+  c.addEventListener('dragover',e=>{e.preventDefault();c.classList.add('over');});
+  c.addEventListener('dragleave',()=>c.classList.remove('over'));
+  c.addEventListener('drop',e=>{e.preventDefault();c.classList.remove('over');
+    const from=+e.dataTransfer.getData('text/plain'); const to=i;
+    if(from===to)return; const arr=STATE.editing.blocks; const[m]=arr.splice(from,1); arr.splice(to,0,m); renderBlocks();});
+  return c;
+}
+function moveBlock(i,d){const a=STATE.editing.blocks;const j=i+d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];renderBlocks();}
+async function saveEditor(){
+  const e=STATE.editing;
+  if(!e.slug) e.slug=slugify(e.title||'untitled');
+  const body={type:e.type,title:e.title||'Untitled',slug:e.slug,status:e.status,excerpt:e.excerpt,blocks:e.blocks,data:{}};
+  try{
+    if(e.id) await api('/content?id='+e.id,{method:'PUT',body:JSON.stringify(body)});
+    else{ const r=await api('/content',{method:'POST',body:JSON.stringify(body)}); e.id=r.id; }
+    toast('Saved'); go(e.type);
+  }catch(err){ toast(err.message); }
+}
+
+/* ---------- media ---------- */
+async function renderMedia(){
+  const m=$('#main'); m.innerHTML='';
+  m.appendChild(elHead('Media Library','Upload and manage images used across the site.'));
+  const drop=el('div','drop','<b>Drop images here</b> or click to upload');
+  const file=el('input'); file.type='file'; file.accept='image/*'; file.multiple=true; file.style.display='none';
+  drop.onclick=()=>file.click();
+  drop.ondragover=e=>{e.preventDefault();drop.classList.add('over');};
+  drop.ondragleave=()=>drop.classList.remove('over');
+  drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');handleFiles(e.dataTransfer.files);};
+  file.onchange=()=>handleFiles(file.files);
+  m.append(drop,file);
+  const grid=el('div','mgrid'); grid.id='mgrid'; m.appendChild(grid);
+  await loadMedia();
+}
+async function loadMedia(){
+  STATE.media=await api('/media').catch(()=>[]);
+  const g=$('#mgrid'); if(!g)return; g.innerHTML='';
+  if(!STATE.media.length){g.appendChild(el('div','empty','No media yet.'));return;}
+  STATE.media.forEach(mm=>{
+    const t=el('div','mtile');
+    t.innerHTML=`<img src="${mm.data||('/api/media?id='+mm.id+'&raw=1')}" alt=""><div class="mm">${esc(mm.filename)}</div><div class="del">✕</div>`;
+    t.querySelector('.del').onclick=async ev=>{ev.stopPropagation();if(!confirm('Delete image?'))return;await api('/media?id='+mm.id,{method:'DELETE'});loadMedia();};
+    g.appendChild(t);
+  });
+}
+function handleFiles(files){
+  [...files].forEach(f=>{
+    const r=new FileReader();
+    r.onload=async()=>{ try{ await api('/media',{method:'POST',body:JSON.stringify({filename:f.name,mime:f.type,data:r.result})}); toast('Uploaded '+f.name); loadMedia(); }catch(e){toast(e.message);} };
+    r.readAsDataURL(f);
+  });
+}
+async function pickMedia(cb){
+  const media=await api('/media').catch(()=>[]);
+  const ov=el('div','modal'); const box=el('div','mbox'); box.innerHTML='<h3 style="margin-bottom:1rem">Select an image</h3>';
+  const g=el('div','mgrid');
+  if(!media.length)g.appendChild(el('div','empty','No media. Upload some in the Media tab.'));
+  media.forEach(mm=>{const t=el('div','mtile');const url=mm.data||('/api/media?id='+mm.id+'&raw=1');
+    t.innerHTML=`<img src="${url}" alt=""><div class="mm">${esc(mm.filename)}</div>`; t.style.cursor='pointer';
+    t.onclick=()=>{cb('/api/media?id='+mm.id+'&raw=1');document.body.removeChild(ov);}; g.appendChild(t);});
+  box.appendChild(g); const close=el('button','btn ghost','Close'); close.style.marginTop='1rem'; close.onclick=()=>document.body.removeChild(ov);
+  box.appendChild(close); ov.appendChild(box); ov.onclick=e=>{if(e.target===ov)document.body.removeChild(ov);}; document.body.appendChild(ov);
+}
+
+/* ---------- settings ---------- */
+async function renderSettings(){
+  const m=$('#main'); m.innerHTML='';
+  m.appendChild(elHead('Settings','Global site settings.'));
+  const s=await api('/settings').catch(()=>({}));
+  const panel=el('div','epanel'); panel.style.maxWidth='560px'; panel.innerHTML='<h3>Site</h3>';
+  const fields=[['siteTitle','Site title'],['tagline','Tagline'],['email','Contact email'],['footer','Footer text']];
+  const inputs={};
+  fields.forEach(([k,l])=>{const f=el('div','field');f.appendChild(el('label','',l));const i=el('input');i.value=(s[k]!=null?s[k]:'');inputs[k]=i;f.appendChild(i);panel.appendChild(f);});
+  const save=el('button','btn','Save settings');
+  save.onclick=async()=>{for(const[k]of fields){await api('/settings',{method:'POST',body:JSON.stringify({key:k,value:inputs[k].value})});}toast('Settings saved');};
+  panel.appendChild(save); m.appendChild(panel);
+}
+
+boot();
+</script>
+</body>
+</html>
