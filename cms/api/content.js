@@ -9,6 +9,12 @@ import { requireAuth, readBody } from '../lib/auth.js';
 // PUT  /api/content?id=12 (auth)
 // DELETE /api/content?id=12 (auth)
 export default async function handler(req, res) {
+  // Allow the public site (different origin) to read published content.
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') return res.status(204).end();
+
   const auth = await requireAuth(req);
   const { type, id, slug } = req.query;
 

@@ -7,6 +7,9 @@ import { requireAuth, readBody } from '../lib/auth.js';
 // POST /api/media  (auth) body:{filename,mime,data(base64 dataURL),alt}
 // DELETE /api/media?id=5 (auth)
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  if (req.method === 'OPTIONS') return res.status(204).end();
+
   const { id, raw } = req.query;
 
   if (req.method === 'GET' && id && raw) {
