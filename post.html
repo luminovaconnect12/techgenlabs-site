@@ -59,7 +59,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
   </article>
 </main>
 
-<footer><div class="wrap"><span>© <span id="yr"></span> TechGen Labs</span><span>hello@techgenlabs.com</span></div></footer>
+<footer><div class="wrap"><span>© <span id="yr"></span> TechGen Labs</span><span>info@techgenlabs.com</span></div></footer>
 
 <script>
 const API='https://techgenlabs-cms.vercel.app/api';
@@ -97,22 +97,4 @@ else{
          <h1>${esc(post.title)}</h1>
          <div class="blocks">${blocks||'<p>'+esc(post.excerpt||'')+'</p>'}</div>`;
       // Per-article SEO: canonical, social + BlogPosting schema
-      const canonUrl=location.origin+'/post.html?slug='+encodeURIComponent(post.slug||slug);
-      const setM=(sel,attr,val)=>{const e=document.head.querySelector(sel);if(e&&val)e.setAttribute(attr,val);};
-      setM('link[rel=canonical]','href',canonUrl);
-      setM('meta[property="og:url"]','content',canonUrl);
-      setM('meta[property="og:type"]','content','article');
-      setM('meta[property="og:title"]','content',post.title);
-      setM('meta[name="twitter:title"]','content',post.title);
-      const d=(post.excerpt||'').slice(0,155);
-      setM('meta[name=description]','content',d);
-      setM('meta[property="og:description"]','content',d);
-      setM('meta[name="twitter:description"]','content',d);
-      const ld={"@context":"https://schema.org","@type":"BlogPosting","headline":post.title,"description":post.excerpt||"","datePublished":post.created_at,"dateModified":post.updated_at||post.created_at,"author":{"@type":"Organization","name":"TechGen Labs","url":location.origin+"/"},"publisher":{"@type":"Organization","name":"TechGen Labs","logo":{"@type":"ImageObject","url":location.origin+"/og-cover.png"}},"mainEntityOfPage":canonUrl,"url":canonUrl};
-      const sc=document.createElement('script');sc.type='application/ld+json';sc.textContent=JSON.stringify(ld);document.head.appendChild(sc);
-    })
-    .catch(()=>{document.getElementById('state').textContent='Could not load this article right now.';});
-}
-</script>
-</body>
-</html>
+      const canonUrl=location.origin+'/post.html?slug='+encodeURICompo
