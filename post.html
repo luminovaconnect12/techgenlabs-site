@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Article — TechGen Labs Blog</title><meta name="description" content="Insights on AI, software, design and growth from TechGen Labs — practical guides to building digital products that rank and convert.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=Instrument+Serif:ital@1&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08090c;--surface:#0f1116;--ink:#f0f1f4;--mist:#969ba6;--dim:#565b66;--accent:#6f9ceb;--on-accent:#08090c;--line:rgba(240,241,244,.08);--line-2:rgba(240,241,244,.16);--display:'Space Grotesk',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--serif:'Instrument Serif',Georgia,serif;--mono:'Space Mono',ui-monospace,monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;line-height:1.6}
+a{color:inherit;text-decoration:none}::selection{background:var(--accent);color:var(--on-accent)}
+.wrap{width:100%;max-width:100rem;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,3.5rem)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.serif{font-family:var(--serif);font-style:italic;color:var(--accent)}
+nav{position:fixed;inset:0 0 auto 0;z-index:200;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 55%,transparent);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{font-family:var(--display);font-weight:600;font-size:1.15rem;letter-spacing:-.02em}.logo b{color:var(--accent)}
+.navlinks{display:flex;gap:1.8rem;align-items:center;font-size:.9rem;color:var(--mist)}
+.navlinks a{transition:color .25s}.navlinks a:hover,.navlinks a.on{color:var(--ink)}
+.pill{border:1px solid var(--line-2);border-radius:999px;padding:.55rem 1.2rem;font-size:.82rem;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;transition:.3s}.pill:hover{background:var(--ink);color:var(--bg)}
+@media(max-width:820px){.navlinks a:not(.pill){display:none}}
+.article{max-width:46rem;margin-inline:auto;padding-top:clamp(9rem,18vh,13rem);padding-bottom:6rem}
+.back{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);display:inline-block;margin-bottom:2rem}
+.back:hover{color:var(--ink)}
+.article h1{font-family:var(--display);font-weight:500;font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.04;letter-spacing:-.03em;margin-bottom:1rem}
+.meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5rem}
+.blocks{display:flex;flex-direction:column;gap:1.4rem}
+.blocks h2{font-family:var(--display);font-weight:500;font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.02em;margin-top:1rem}
+.blocks h3{font-family:var(--display);font-weight:500;font-size:1.4rem;letter-spacing:-.01em;margin-top:.6rem}
+.blocks h4{font-family:var(--display);font-weight:600;font-size:1.15rem}
+.blocks p{color:#c8ccd4;font-size:1.08rem}
+.blocks img{width:100%;border-radius:1rem;border:1px solid var(--line)}
+.blocks .btn{display:inline-block;background:var(--accent);color:var(--on-accent);font-weight:600;padding:.75rem 1.4rem;border-radius:999px;width:fit-content}
+.blocks blockquote{border-left:2px solid var(--accent);padding-left:1.3rem;font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--ink)}
+.blocks blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-top:.7rem}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}@media(max-width:640px){.cols{grid-template-columns:1fr}}
+.state{padding-top:11rem;text-align:center;color:var(--mist)}
+footer{border-top:1px solid var(--line);padding-block:3rem;color:var(--dim);font-size:.85rem;font-family:var(--mono)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+</style>
+<meta name="robots" content="index, follow, max-image-preview:large"><meta name="author" content="TechGen Labs"><meta name="theme-color" content="#08090c"><link rel="canonical" href="https://techgenlabs.com/post.html"><meta property="og:type" content="website"><meta property="og:site_name" content="TechGen Labs"><meta property="og:title" content="TechGen Labs — Blog"><meta property="og:description" content="TechGen Labs — Blog — TechGen Labs, a digital product studio building AI software, web &amp; mobile apps, brands and growth systems."><meta property="og:url" content="https://techgenlabs.com/post.html"><meta property="og:image" content="https://techgenlabs.com/og-cover.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="TechGen Labs — Blog"><meta name="twitter:description" content="TechGen Labs — Blog — TechGen Labs, a digital product studio building AI software, web &amp; mobile apps, brands and growth systems."><meta name="twitter:image" content="https://techgenlabs.com/og-cover.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://techgenlabs.com/#org","name":"TechGen Labs","url":"https://techgenlabs.com/","logo":"https://techgenlabs.com/og-cover.png","description":"Digital product studio building AI agents, custom software, web & mobile apps, branding and growth systems.","sameAs":[]}</script></head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="index.html">TechGen<b>*</b>Labs</a>
+  <div class="navlinks">
+    <a href="services.html">Services</a>
+    <a href="work.html">Work</a>
+    <a href="blog.html" class="on">Blog</a>
+    <a href="about.html">About</a>
+    <a class="pill" href="contact.html">Let’s talk</a>
+  </div>
+</div></nav>
+
+<main class="wrap">
+  <article class="article" id="article">
+    <div class="state" id="state">Loading…</div>
+  </article>
+</main>
+
+<footer><div class="wrap"><span>© <span id="yr"></span> TechGen Labs</span><span>hello@techgenlabs.com</span></div></footer>
+
+<script>
+const API='https://techgenlabs-cms.vercel.app/api';
+const ORIGIN=API.replace('/api','');
+document.getElementById('yr').textContent=new Date().getFullYear();
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const slug=new URLSearchParams(location.search).get('slug');
+const img=u=>!u?'':(u.startsWith('/')?ORIGIN+u:u);
+function fmt(d){try{return new Date(d).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch{return'';}}
+function renderBlock(b){
+  const p=b.props||{};
+  switch(b.type){
+    case'heading':{const l=Math.min(4,Math.max(2,parseInt(p.level)||2));return`<h${l}>${esc(p.text)}</h${l}>`;}
+    case'text':return`<p>${esc(p.text).replace(/\n/g,'<br>')}</p>`;
+    case'image':return p.src?`<img src="${esc(img(p.src))}" alt="${esc(p.alt||'')}">`:'';
+    case'button':return p.label?`<a class="btn" href="${esc(p.href||'#')}">${esc(p.label)}</a>`:'';
+    case'quote':return`<blockquote>${esc(p.text)}${p.cite?`<cite>${esc(p.cite)}</cite>`:''}</blockquote>`;
+    case'columns':return`<div class="cols"><div><p>${esc(p.left).replace(/\n/g,'<br>')}</p></div><div><p>${esc(p.right).replace(/\n/g,'<br>')}</p></div></div>`;
+    case'spacer':return`<div style="height:${(parseInt(p.size)||40)}px"></div>`;
+    case'html':return p.code||'';
+    default:return'';
+  }
+}
+if(!slug){document.getElementById('state').textContent='No article specified.';}
+else{
+  fetch(API+'/content?type=posts&slug='+encodeURIComponent(slug))
+    .then(r=>r.json())
+    .then(post=>{
+      if(!post){document.getElementById('article').innerHTML='<div class="state">This article isn’t available. <a class="serif" href="blog.html">Back to blog</a></div>';return;}
+      document.title=post.title+' — TechGen Labs';
+      const blocks=(post.blocks||[]).map(renderBlock).join('');
+      document.getElementById('article').innerHTML=
+        `<a class="back" href="blog.html">← All articles</a>
+         <div class="meta">${esc(fmt(post.created_at))}</div>
+         <h1>${esc(post.title)}</h1>
+         <div class="blocks">${blocks||'<p>'+esc(post.excerpt||'')+'</p>'}</div>`;
+      // Per-article SEO: canonical, social + BlogPosting schema
+      const canonUrl=location.origin+'/post.html?slug='+encodeURIComponent(post.slug||slug);
+      const setM=(sel,attr,val)=>{const e=document.head.querySelector(sel);if(e&&val)e.setAttribute(attr,val);};
+      setM('link[rel=canonical]','href',canonUrl);
+      setM('meta[property="og:url"]','content',canonUrl);
+      setM('meta[property="og:type"]','content','article');
+      setM('meta[property="og:title"]','content',post.title);
+      setM('meta[name="twitter:title"]','content',post.title);
+      const d=(post.excerpt||'').slice(0,155);
+      setM('meta[name=description]','content',d);
+      setM('meta[property="og:description"]','content',d);
+      setM('meta[name="twitter:description"]','content',d);
+      const ld={"@context":"https://schema.org","@type":"BlogPosting","headline":post.title,"description":post.excerpt||"","datePublished":post.created_at,"dateModified":post.updated_at||post.created_at,"author":{"@type":"Organization","name":"TechGen Labs","url":location.origin+"/"},"publisher":{"@type":"Organization","name":"TechGen Labs","logo":{"@type":"ImageObject","url":location.origin+"/og-cover.png"}},"mainEntityOfPage":canonUrl,"url":canonUrl};
+      const sc=document.createElement('script');sc.type='application/ld+json';sc.textContent=JSON.stringify(ld);document.head.appendChild(sc);
+    })
+    .catch(()=>{document.getElementById('state').textContent='Could not load this article right now.';});
+}
+</script>
+</body>
+</html>
