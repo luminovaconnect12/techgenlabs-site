@@ -63,8 +63,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 </div></section>
 
 <main class="wrap">
-  <div id="posts" class="grid"></div>
-  <div id="state" class="state">Loading posts…</div>
+  <div id="posts" class="grid">
+    <a class="card" href="ai-agent-cost-2026.html">
+      <div class="cover"><div class="ph">TechGen Labs</div></div>
+      <div class="body">
+        <span class="k">Jul 16, 2026 · Guide</span>
+        <h3>How much does an AI agent cost in 2026?</h3>
+        <p>Simple agents $5K–$50K, mid-tier $20K–$80K, advanced $100K+. What actually drives the price — and how to scope a build that pays for itself.</p>
+        <span class="read">Read →</span>
+      </div>
+    </a>
+  </div>
+  <div id="state" class="state" style="display:none"></div>
 </main>
 
 <footer><div class="wrap"><span>© <span id="yr"></span> TechGen Labs</span><span>info@techgenlabs.com</span></div></footer>
@@ -88,13 +98,15 @@ fetch(API+'/content?type=posts')
   .then(r=>r.json())
   .then(posts=>{
     const state=document.getElementById('state');
-    if(!Array.isArray(posts)||!posts.length){state.textContent='No posts published yet. Add one in the CMS and set it to Published.';return;}
-    state.style.display='none';
+    if(!Array.isArray(posts)||!posts.length){return;}
     const wrap=document.getElementById('posts');
+    const seen=new Set([...wrap.querySelectorAll('a.card')].map(a=>a.getAttribute('href')));
     posts.forEach(p=>{
+      const href='post.html?slug='+encodeURIComponent(p.slug||p.id);
+      if(seen.has(href)) return;
       const img=firstImage(p);
       const a=document.createElement('a');
-      a.className='card';a.href='post.html?slug='+encodeURIComponent(p.slug||p.id);
+      a.className='card';a.href=href;
       a.innerHTML=`<div class="cover">${img?`<img src="${esc(img)}" alt="">`:'<div class="ph">TechGen Labs</div>'}</div>
         <div class="body">
           <span class="k">${esc(fmt(p.created_at))||'Article'}</span>
@@ -105,7 +117,7 @@ fetch(API+'/content?type=posts')
       wrap.appendChild(a);
     });
   })
-  .catch(()=>{document.getElementById('state').textContent='Could not load posts right now. Please try again shortly.';});
+  .catch(()=>{});
 </script>
 </body>
 </html>
