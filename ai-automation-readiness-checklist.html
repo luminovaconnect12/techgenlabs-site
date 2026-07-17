@@ -120,14 +120,14 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 document.getElementById('yr').textContent=new Date().getFullYear();
 // Lead capture — set CAPTURE_ENDPOINT to a Formspree/Getform/webhook URL to go live.
 // Until then the form confirms gracefully so nothing is broken for visitors.
-const CAPTURE_ENDPOINT="";
+const CAPTURE_ENDPOINT="https://formsubmit.co/ajax/info@techgenlabs.com";
 document.getElementById('leadForm').addEventListener('submit',function(e){
   e.preventDefault();
   const email=document.getElementById('email').value.trim();
   if(!email||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){document.getElementById('email').focus();return;}
   const done=()=>{document.getElementById('leadForm').style.display='none';document.getElementById('ok').style.display='block';};
   if(CAPTURE_ENDPOINT){
-    fetch(CAPTURE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({email,source:'readiness-checklist'})}).then(done).catch(done);
+    fetch(CAPTURE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({email:email,source:'AI Automation Readiness Checklist',_subject:'New lead — AI Automation Readiness Checklist',_template:'table',_captcha:'false'})}).then(done).catch(done);
   } else { done(); }
 });
 </script>
