@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>What Is an AI Agent? A Plain-English Guide (2026) — TechGen Labs</title>
+<meta name="description" content="An AI agent is software that pursues a goal on its own — it perceives, plans, uses tools, and acts, looping until the task is done. A plain-English 2026 guide: how agents work, how they differ from chatbots, types, limits, and cost."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=Instrument+Serif:ital@1&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08090c;--surface:#0f1116;--ink:#f0f1f4;--mist:#969ba6;--dim:#565b66;--accent:#6f9ceb;--on-accent:#08090c;--line:rgba(240,241,244,.08);--line-2:rgba(240,241,244,.16);--display:'Space Grotesk',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--serif:'Instrument Serif',Georgia,serif;--mono:'Space Mono',ui-monospace,monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;line-height:1.6}
+a{color:inherit;text-decoration:none}::selection{background:var(--accent);color:var(--on-accent)}
+.wrap{width:100%;max-width:100rem;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,3.5rem)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.serif{font-family:var(--serif);font-style:italic;color:var(--accent)}
+nav{position:fixed;inset:0 0 auto 0;z-index:200;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 55%,transparent);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{font-family:var(--display);font-weight:600;font-size:1.15rem;letter-spacing:-.02em}.logo b{color:var(--accent)}
+.navlinks{display:flex;gap:1.8rem;align-items:center;font-size:.9rem;color:var(--mist)}
+.navlinks a{transition:color .25s}.navlinks a:hover,.navlinks a.on{color:var(--ink)}
+.pill{border:1px solid var(--line-2);border-radius:999px;padding:.55rem 1.2rem;font-size:.82rem;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;transition:.3s}.pill:hover{background:var(--ink);color:var(--bg)}
+@media(max-width:820px){.navlinks a:not(.pill){display:none}}
+.article{max-width:46rem;margin-inline:auto;padding-top:clamp(9rem,18vh,13rem);padding-bottom:6rem}
+.back{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);display:inline-block;margin-bottom:2rem}
+.back:hover{color:var(--ink)}
+.article h1{font-family:var(--display);font-weight:500;font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.04;letter-spacing:-.03em;margin-bottom:1rem}
+.meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5rem}
+.blocks{display:flex;flex-direction:column;gap:1.4rem}
+.blocks h2{font-family:var(--display);font-weight:500;font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.02em;margin-top:1.4rem}
+.blocks h3{font-family:var(--display);font-weight:500;font-size:1.4rem;letter-spacing:-.01em;margin-top:.6rem}
+.blocks p{color:#c8ccd4;font-size:1.08rem}
+.blocks ul,.blocks ol{color:#c8ccd4;font-size:1.08rem;padding-left:1.3rem;display:flex;flex-direction:column;gap:.5rem}
+.blocks strong{color:var(--ink)}
+.tldr{background:var(--surface);border:1px solid var(--line-2);border-radius:1rem;padding:1.6rem 1.8rem}
+.tldr p{color:var(--ink)}
+.tbl{width:100%;border-collapse:collapse;font-size:.98rem}
+.tbl th,.tbl td{text-align:left;padding:.8rem .9rem;border-bottom:1px solid var(--line)}
+.tbl th{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.tbl td{color:#c8ccd4}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:1rem}
+.cta{background:linear-gradient(135deg,#141a26,#0b0d12);border:1px solid var(--line-2);border-radius:1.2rem;padding:2rem;margin-top:1rem}
+.cta h3{margin-top:0}
+.btn{display:inline-block;background:var(--accent);color:var(--on-accent);font-weight:600;padding:.75rem 1.4rem;border-radius:999px;width:fit-content;margin-top:.4rem}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+.faq details{border-bottom:1px solid var(--line);padding:1rem 0}
+.faq summary{font-family:var(--display);font-weight:500;font-size:1.15rem;cursor:pointer;color:var(--ink)}
+.faq p{margin-top:.7rem}
+footer{border-top:1px solid var(--line);padding-block:3rem;color:var(--dim);font-size:.85rem;font-family:var(--mono)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+</style>
+<meta name="robots" content="index, follow, max-image-preview:large"><meta name="author" content="TechGen Labs"><meta name="theme-color" content="#08090c">
+<link rel="canonical" href="https://techgenlabs.com/what-is-an-ai-agent.html">
+<meta property="og:type" content="article"><meta property="og:site_name" content="TechGen Labs"><meta property="og:title" content="What Is an AI Agent? A Plain-English Guide (2026)"><meta property="og:description" content="An AI agent is software that pursues a goal on its own — it perceives, plans, uses tools, and acts, looping until the task is done. How agents work, how they differ from chatbots, types, limits, and cost."><meta property="og:url" content="https://techgenlabs.com/what-is-an-ai-agent.html"><meta property="og:image" content="https://techgenlabs.com/og-cover.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="What Is an AI Agent? A Plain-English Guide"><meta name="twitter:description" content="An AI agent perceives, plans, uses tools, and acts on its own until a task is done. How agents work, how they differ from chatbots, types, limits, and cost."><meta name="twitter:image" content="https://techgenlabs.com/og-cover.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://techgenlabs.com/what-is-an-ai-agent.html#article","headline":"What Is an AI Agent? A Plain-English Guide (2026)","description":"An AI agent is software that pursues a goal on its own — it perceives, plans, uses tools, and acts, looping until the task is done. A plain-English 2026 guide to how agents work, how they differ from chatbots, their types, limits, and cost.","datePublished":"2026-07-21","dateModified":"2026-07-21","author":{"@type":"Organization","name":"TechGen Labs","url":"https://techgenlabs.com/"},"publisher":{"@type":"Organization","name":"TechGen Labs","logo":{"@type":"ImageObject","url":"https://techgenlabs.com/og-cover.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://techgenlabs.com/what-is-an-ai-agent.html"},"image":"https://techgenlabs.com/og-cover.png","keywords":"what is an AI agent, AI agent definition, AI agent vs chatbot, how AI agents work, types of AI agents, agentic AI"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is an AI agent in simple terms?","acceptedAnswer":{"@type":"Answer","text":"An AI agent is software that pursues a goal on its own. Instead of just answering a question, it perceives its situation by reading data, decides on a plan, uses tools and APIs to take action, and loops — checking the result and trying again — until the task is complete. A chatbot replies; an agent gets something done."}},
+{"@type":"Question","name":"What is the difference between an AI agent and a chatbot?","acceptedAnswer":{"@type":"Answer","text":"A chatbot answers using scripted flows or a language model, but it doesn't take action in your systems. An AI agent reads data, calls tools and APIs, makes decisions, and completes a task end to end — a resolved ticket, a booked meeting, an updated record. Agents are accountable for an outcome, not just a reply, which is why they cost more to build."}},
+{"@type":"Question","name":"How does an AI agent actually work?","acceptedAnswer":{"@type":"Answer","text":"Most agents run a loop with four parts: perception (read the request and relevant data), reasoning and planning (a language model decides the next step), tool use (call an API or system to act), and memory (remember context across steps). The agent repeats the loop — act, observe the result, adjust — until the goal is met or it hits a rule that escalates to a human."}},
+{"@type":"Question","name":"What are AI agents good and bad at?","acceptedAnswer":{"@type":"Answer","text":"Agents excel at high-volume, well-defined, repetitive tasks with clean data and clear rules — support triage, lead qualification, order lookups, data entry. They struggle with novel one-off situations, messy or siloed data, judgment calls, and anything requiring accountability for a high-stakes decision. Good designs keep a human in the loop for those cases."}}
+]}
+</script>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="index.html"><img src="logo-header.png" alt="TechGenLabs" height="29" style="height:29px;width:auto;display:block"></a>
+  <div class="navlinks">
+    <a href="services.html">Services</a>
+    <a href="work.html">Work</a>
+    <a href="blog.html" class="on">Blog</a>
+    <a href="about.html">About</a>
+    <a class="pill" href="contact.html">Let&rsquo;s talk</a>
+  </div>
+</div></nav>
+
+<main class="wrap">
+  <article class="article">
+    <a class="back" href="blog.html">&larr; All articles</a>
+    <div class="meta">Guide &middot; AI &amp; Automation &middot; July 21, 2026</div>
+    <h1>What is an AI agent? A plain-English guide</h1>
+    <div class="blocks">
+      <div class="tldr">
+        <p><strong>Short answer:</strong> An AI agent is <strong>software that pursues a goal on its own</strong>. Rather than just answering a question, it <strong>perceives</strong> its situation by reading data, <strong>plans</strong> what to do, <strong>uses tools and APIs</strong> to take action, and <strong>loops</strong> &mdash; checking the result and adjusting &mdash; until the task is done. The one-line test: a chatbot <em>replies</em>; an agent <em>gets something done</em>. That difference &mdash; taking real action in your systems, accountable for an outcome &mdash; is the whole point, and the reason agents cost more than a scripted bot.</p>
+      </div>
+
+      <p>&ldquo;AI agent&rdquo; is the phrase of 2026, and it&rsquo;s used to mean about six different things. This guide cuts through it in plain English &mdash; no framework jargon, no hype &mdash; so that as a business owner or operations leader you can tell what an agent is, when you need one, and when a cheaper tool will do.</p>
+
+      <h2>The one-sentence definition</h2>
+      <p>Here&rsquo;s the definition major providers converge on. IBM describes an AI agent as &ldquo;a system or program capable of autonomously performing tasks on behalf of a user by designing its workflow and utilizing available tools.&rdquo; Google Cloud puts it as &ldquo;software that uses AI to pursue goals and complete tasks on behalf of users.&rdquo; Strip it down: an agent has a <strong>goal</strong>, the <strong>autonomy</strong> to decide steps, and the <strong>tools</strong> to act. Miss any of those three and you have something else &mdash; a chatbot, a script, or a report.</p>
+
+      <h2>AI agent vs chatbot vs plain automation</h2>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>&nbsp;</th><th>What it does</th><th>Takes action?</th><th>Handles the unexpected?</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Scripted automation</strong></td><td>Runs fixed if-this-then-that rules</td><td>Yes, but only exact pre-defined steps</td><td>No &mdash; breaks on anything new</td></tr>
+          <tr><td><strong>Chatbot</strong></td><td>Answers questions via scripts or a language model</td><td>Rarely &mdash; mostly replies</td><td>Somewhat, but doesn&rsquo;t <em>do</em> anything</td></tr>
+          <tr><td><strong>AI agent</strong></td><td>Pursues a goal: reads data, decides, acts, loops</td><td>Yes &mdash; calls tools and APIs to complete tasks</td><td>Yes &mdash; adapts, and escalates when it can&rsquo;t</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>If a scripted FAQ bot solves your problem, don&rsquo;t pay agent prices for it. We break the bot-vs-agent decision down further in <a href="ai-agent-vs-chatbot.html">AI agent vs chatbot</a>, and add RPA to the comparison in <a href="ai-agent-vs-rpa-vs-chatbot.html">AI agent vs RPA vs chatbot</a>.</p>
+
+      <h2>The four parts of an AI agent</h2>
+      <p>Almost every agent, however it&rsquo;s built, has the same four building blocks:</p>
+      <ul>
+        <li><strong>Perception</strong> &mdash; how it takes in the request and reads the relevant data (an email, a CRM record, an order, a document).</li>
+        <li><strong>Reasoning &amp; planning</strong> &mdash; a language model works out what the goal requires and what the next step should be.</li>
+        <li><strong>Tool use</strong> &mdash; the ability to actually <em>do</em> things: call an API, update a record, send a message, query a database.</li>
+        <li><strong>Memory</strong> &mdash; keeping context across steps so it doesn&rsquo;t forget what it already tried or learned this session.</li>
+      </ul>
+
+      <h2>How an AI agent actually works &mdash; a worked example</h2>
+      <p>Say a customer emails, &ldquo;I need to change the shipping address on order 4821.&rdquo; A scripted bot would reply with a help-center link. An agent runs a loop:</p>
+      <ol>
+        <li><strong>Perceive:</strong> reads the email, extracts the intent (address change) and the order number.</li>
+        <li><strong>Plan:</strong> decides it needs to check whether the order has shipped before it can change anything.</li>
+        <li><strong>Act (tool use):</strong> queries the order system &mdash; order 4821 is still in the warehouse.</li>
+        <li><strong>Observe &amp; loop:</strong> because it hasn&rsquo;t shipped, the agent updates the address, confirms with the customer, and logs the change.</li>
+        <li><strong>Escalate if needed:</strong> if the order <em>had</em> shipped, the rule says stop &mdash; explain the options and hand off to a human. Money and exceptions stay human.</li>
+      </ol>
+      <p>That act-observe-adjust loop, bounded by rules you set, is what makes it an agent rather than a fancier autocomplete.</p>
+
+      <h2>Types of AI agents</h2>
+      <p>You&rsquo;ll see these categories in the wild, from simplest to most capable:</p>
+      <ul>
+        <li><strong>Simple reflex agents</strong> &mdash; react to the current input with fixed rules; no memory.</li>
+        <li><strong>Model-based agents</strong> &mdash; keep an internal picture of the world to handle partial information.</li>
+        <li><strong>Goal-based agents</strong> &mdash; choose actions that move toward a defined objective.</li>
+        <li><strong>Utility-based agents</strong> &mdash; weigh trade-offs to pick the <em>best</em> action, not just a valid one.</li>
+        <li><strong>Multi-agent systems</strong> &mdash; several specialized agents coordinating on a larger job, each owning a piece.</li>
+      </ul>
+      <p>For most SMB use cases in 2026, a well-scoped goal-based agent handling one workflow is where the ROI is &mdash; not a sprawling multi-agent system.</p>
+
+      <h2>What agents are good at &mdash; and not</h2>
+      <p>Being specific and honest here saves money:</p>
+      <ul>
+        <li><strong>Great at:</strong> high-volume, repetitive, well-defined tasks with clean data and clear rules &mdash; support triage, lead qualification, order lookups, invoice matching, data entry.</li>
+        <li><strong>Weak at:</strong> novel one-off situations, messy or siloed data, judgment calls, and high-stakes decisions where accountability matters. These should escalate to a person by design.</li>
+      </ul>
+      <p>Want to see this applied to a real function? Our <a href="ai-agents-for-ecommerce-operations.html">e-commerce operations playbook</a> shows agents running order, support and inventory work end to end.</p>
+
+      <h2>What does an AI agent cost, and how do you start?</h2>
+      <p>Pricing spans a wide range depending on complexity and integrations &mdash; simple single-purpose agents to advanced multi-step systems. We lay out the full 2026 pricing picture in <a href="ai-agent-cost-2026.html">how much does an AI agent cost</a>. The way to start is the same regardless of budget: pick one high-volume, well-defined workflow, ship a fixed-scope pilot in 4&ndash;6 weeks with one success metric, measure against a baseline, and expand only once it proves out.</p>
+
+      <div class="cta">
+        <h3>Wondering if your business is ready for an AI agent?</h3>
+        <p>Grab the <strong>AI Automation Readiness Checklist</strong> &mdash; a 12-point scorecard that shows which of your workflows is the best first candidate for an agent, and roughly what it would cost. Or book a 20-minute scoping call and we&rsquo;ll walk through it together.</p>
+        <a class="btn" href="ai-automation-readiness-checklist.html">Get the checklist &rarr;</a>
+        <a class="btn ghost" href="service-ai-agents.html">See our AI Agents service &rarr;</a>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="ai-agent-vs-chatbot.html">AI agent vs chatbot &mdash; which do you actually need?</a></li>
+        <li><a href="ai-agent-cost-2026.html">How much does an AI agent cost in 2026?</a></li>
+        <li><a href="ai-agents-for-ecommerce-operations.html">AI agents for e-commerce operations</a></li>
+        <li>Our services: <a href="service-ai-agents.html">AI Agents</a> &middot; <a href="service-workflow-automation.html">Workflow Automation</a> &middot; <a href="service-ai-chatbots.html">AI Chatbots</a></li>
+      </ul>
+      <h2>Sources &amp; further reading</h2>
+      <ul>
+        <li><a href="https://www.ibm.com/think/ai-agents" rel="nofollow noopener" target="_blank">IBM &mdash; The 2026 Guide to AI Agents</a></li>
+        <li><a href="https://cloud.google.com/discover/what-are-ai-agents" rel="nofollow noopener" target="_blank">Google Cloud &mdash; What are AI agents? Definition, examples, and types</a></li>
+        <li><a href="https://www.ibm.com/think/topics/ai-agents" rel="nofollow noopener" target="_blank">IBM &mdash; What are AI agents? (overview)</a></li>
+      </ul>
+      <h2 id="faq">Frequently asked questions</h2>
+      <div class="faq">
+        <details open><summary>What is an AI agent in simple terms?</summary><p>Software that pursues a goal on its own. Instead of just answering, it reads data, decides on a plan, uses tools and APIs to act, and loops &mdash; checking the result and trying again &mdash; until the task is complete. A chatbot replies; an agent gets something done.</p></details>
+        <details><summary>What&rsquo;s the difference between an AI agent and a chatbot?</summary><p>A chatbot answers using scripts or a language model but doesn&rsquo;t take action in your systems. An agent reads data, calls tools and APIs, decides, and completes a task end to end &mdash; a resolved ticket, an updated record. Agents are accountable for an outcome, which is why they cost more to build.</p></details>
+        <details><summary>How does an AI agent actually work?</summary><p>Most run a loop with four parts: perception (read the request and data), reasoning and planning (a model decides the next step), tool use (call a system to act), and memory (hold context across steps). It repeats &mdash; act, observe, adjust &mdash; until the goal is met or a rule escalates to a human.</p></details>
+        <details><summary>What are AI agents good and bad at?</summary><p>Great at high-volume, well-defined, repetitive tasks with clean data and clear rules. Weak at novel one-off situations, messy data, judgment calls, and high-stakes decisions &mdash; which good designs escalate to a person.</p></details>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer><div class="wrap"><span style="display:flex;align-items:center;gap:14px"><img src="logo-header.png" alt="TechGenLabs" height="30" style="height:30px;width:auto"> &copy; <span id="yr2"></span> TechGenLabs</span><span>info@techgenlabs.com</span></div></footer><script>var y=document.getElementById("yr2");if(y)y.textContent=new Date().getFullYear();</script>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>
